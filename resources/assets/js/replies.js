@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 window.$ = require('jquery');
+window.axios = require('axios');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -16,8 +17,8 @@ window.$ = require('jquery');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('replies', require('./components/Replies.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#replies'
 });

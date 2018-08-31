@@ -6,7 +6,6 @@
 @section('content')
 
 <div class="row">
-
     <div class="col-lg-3 col-md-3 hidden-sm hidden-xs author-info">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -60,7 +59,6 @@
                         </form>
                     </div>
                 @endcan
-
             </div>
         </div>
 
@@ -68,9 +66,16 @@
         <div class="panel panel-default topic-reply">
             <div class="panel-body">
                 @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
-                @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
+                @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get(), 'topic_id' => $topic->id])
             </div>
         </div>
+        {{--<div id="app">--}}
+            {{--<example></example>--}}
+        {{--</div>--}}
     </div>
 </div>
+@stop
+
+@section('scripts')
+    <script src="{{ asset('js/replies.js') }}"></script>
 @stop

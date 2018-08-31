@@ -25,8 +25,14 @@ Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
 
 Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show');
+
 Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]);
+Route::get('replies/{topic}', 'RepliesController@list');
+
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
 
 Route::get('notifications/mail', 'NotificationsController@mail');
+Route::get('/mailable', function () {
+    return new \App\Mail\AccountInitialized();
+});

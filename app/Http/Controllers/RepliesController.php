@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reply;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReplyRequest;
@@ -31,5 +32,10 @@ class RepliesController extends Controller
         $reply->delete();
 
         return redirect()->to($reply->topic->link())->with('success', '成功删除回复！');
+    }
+
+    public function list(Topic $topic) {
+        $replies = $topic->replies()->with('user')->get()->toArray();
+        return response()->json($replies);
     }
 }
