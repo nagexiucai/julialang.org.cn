@@ -8,9 +8,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'LaraBBS') - {{ setting('site_name', 'Laravel 进阶教程') }}</title>
-    <meta name="description" content="@yield('description', setting('seo_description', 'LaraBBS 爱好者社区。'))" />
-    <meta name="keyword" content="@yield('keyword', setting('seo_keyword', 'LaraBBS,社区,论坛,开发者论坛'))" />
+    <title>@yield('title', '朱华社区') - {{ setting('site_name', '朱华社区') }}</title>
+    <meta name="description" content="@yield('description', setting('seo_description', '朱华社区。'))" />
+    <meta name="keyword" content="@yield('keyword', setting('seo_keyword', 'Julia, JuliaLang, 朱华社区'))" />
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -37,7 +37,7 @@
     @endif
 
     <!-- Scripts -->
-    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

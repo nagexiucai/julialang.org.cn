@@ -14,7 +14,7 @@ return [
     'edit_fields' => [
         'site_name' => [
             // 表单标题
-            'title' => '站点名称',
+            'title' => '朱华社区',
 
             // 表单条目类型
             'type' => 'text',
@@ -54,8 +54,8 @@ return [
     'before_save' => function(&$data)
     {
         // 为网站名称加上后缀，加上判断是为了防止多次添加
-        if (strpos($data['site_name'], 'Powered by LaraBBS') === false) {
-            $data['site_name'] .= ' - Powered by LaraBBS';
+        if (strpos($data['site_name'], '朱华社区') === false) {
+            $data['site_name'] .= ' - 朱华社区';
         }
     },
 

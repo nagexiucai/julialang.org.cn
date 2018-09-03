@@ -31,7 +31,8 @@ class RepliesController extends Controller
         $this->authorize('destroy', $reply);
         $reply->delete();
 
-        return redirect()->to($reply->topic->link())->with('success', '成功删除回复！');
+//        return redirect()->to($reply->topic->link())->with('success', '成功删除回复！');
+        return response()->json(['code' => 0]);
     }
 
     public function list(Topic $topic) {

@@ -17,11 +17,9 @@
                         <span class="meta" v-bind:title="reply.created_at">{{ reply.created_at }}</span>
 
                         <span class="meta pull-right">
-                            <form v-bind:action="'/replies/destroy/' + reply.id" method="post">
-                                <button type="submit" class="btn btn-default btn-xs pull-right">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </button>
-                            </form>
+                            <button type="submit" class="btn btn-default btn-xs pull-right" v-on:click="remove(reply.id)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </button>
                         </span>
                         <span class="meta pull-right">
                             <a class="btn btn-default btn-xs pull-right reply">
@@ -29,8 +27,8 @@
                             </a>
                         </span>
                     </div>
-                    <div class="reply-content">
-                        {{ reply.content }}
+                    <div class="reply-content" v-html="reply.content">
+
                     </div>
                 </div>
             </div>
@@ -63,7 +61,41 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
-            }
+            },
+            remove: function (id) {
+                console.log(id);
+                this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let _this = this;
+                    let url = '/replies/' + id;
+                    axios.delete(url, {params: {}}, {
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    }).then(function (response) {
+                        if (response.data.code === 0) {
+                            _this.$message.success('You\'ve deleted an article.')
+                            _this.load()
+                        }
+                    }).catch(function (error) {
+                        _this.$notify({
+                            type: 'error',
+                            title: error.response.statusText,
+                            message: error.response.data,
+                            duration: 0
+                        })
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+
+            },
         }
     }
 </script>

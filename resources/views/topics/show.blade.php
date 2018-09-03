@@ -69,9 +69,6 @@
                 @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get(), 'topic_id' => $topic->id])
             </div>
         </div>
-        {{--<div id="app">--}}
-            {{--<example></example>--}}
-        {{--</div>--}}
     </div>
 </div>
 @stop

@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                LaraBBS
+                {{ setting('site_name', '朱华社区') }}
             </a>
         </div>
 

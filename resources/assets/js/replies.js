@@ -5,11 +5,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 window.Vue = require('vue');
-window.$ = require('jquery');
 window.axios = require('axios');
+import {Message, MessageBox, Notification} from 'element-ui'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,6 +18,13 @@ window.axios = require('axios');
  */
 
 Vue.component('replies', require('./components/Replies.vue'));
+Vue.prototype.$message = Message;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$notify = Notification;
+
+axios.defaults.headers.delete['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 const app = new Vue({
     el: '#replies'
