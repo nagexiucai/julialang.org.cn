@@ -45,3 +45,24 @@ function model_plural_name($model)
     // 获取子串的复数形式，例如：传参 `user` 会得到 `users`
     return str_plural($snake_case_name);
 }
+
+if (!function_exists('array_to_map')) {
+    /**
+     * 将数组转为根据指定键的值作为键的数组。
+     *
+     * @param $data
+     * @param $key_field
+     * @param bool $reserve_key_field
+     * @return array
+     */
+    function array_to_map($data, $key_field, $reserve_key_field = false) {
+        $result = [];
+        foreach ($data as $ar) {
+            if (isset($ar[$key_field])) {
+                $result[$ar[$key_field]] = $ar;
+                if (!$reserve_key_field) unset($result[$ar[$key_field]][$key_field]);
+            }
+        }
+        return $result;
+    }
+}

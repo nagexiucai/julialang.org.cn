@@ -65,8 +65,16 @@
         {{-- 用户回复列表 --}}
         <div class="panel panel-default topic-reply">
             <div class="panel-body">
-                @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
-                @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get(), 'topic_id' => $topic->id])
+                <div id="replies">
+                    <reply-box :topic_id="{{ $topic->id }}"
+                               :reply_action="'{{ route('replies.store') }}'"
+                               :auth_checked="<?php if (Auth::check()) echo 1; else echo 0;?>"
+                               :can_comment="<?php if(Auth::user()->can('create_comments')) echo 1; else echo 0;?>"></reply-box>
+                    <replies :topic_id="{{ $topic->id }}"
+                             :can_comment="<?php if(Auth::user()->can('create_comments')) echo 1; else echo 0;?>"></replies>
+                </div>
+                {{--@includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])--}}
+                {{--@include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get(), 'topic_id' => $topic->id])--}}
             </div>
         </div>
     </div>

@@ -1,14 +1,14 @@
 <template>
     <div class="reply-list">
         <div v-for="(reply, key) in replies">
-            <div class=" media" v-bind:name="'reply' + reply.id" v-bind:id="'reply' + reply.id">
-                <div class="avatar pull-left">
+            <div class="media row" v-bind:name="'reply' + reply.id" v-bind:id="'reply' + reply.id">
+                <div class="avatar col-md-1">
                     <a v-bind:href="'/users/show/' + reply.id">
                         <img class="media-object img-thumbnail" v-bind:alt="reply.user.name" v-bind:src="reply.user.avatar"  style="width:48px;height:48px;"/>
                     </a>
                 </div>
 
-                <div class="infos">
+                <div class="infos col-md-11">
                     <div class="media-heading">
                         <a v-bind:href="'/users/show/' + reply.id" v-bind:title="reply.user.name">
                             {{ reply.user.name }}
@@ -16,19 +16,24 @@
                         <span> •  </span>
                         <span class="meta" v-bind:title="reply.created_at">{{ reply.created_at }}</span>
 
-                        <span class="meta pull-right">
+                        <span v-if="reply.can_destroy === true" class="meta pull-right">
                             <button type="submit" class="btn btn-default btn-xs pull-right" v-on:click="remove(reply.id)">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </button>
                         </span>
-                        <span class="meta pull-right">
-                            <a class="btn btn-default btn-xs pull-right reply">
+                        <span v-if="can_comment === 1" class="meta pull-right">
+                            <button class="btn btn-default btn-xs pull-right reply" v-on:click="comment(reply.id)">
                                 <i class="glyphicon glyphicon-comment"></i>
-                            </a>
+                            </button>
                         </span>
                     </div>
-                    <div class="reply-content" v-html="reply.content">
-
+                    <div class="reply-content">
+                        <div v-if="reply.target !== undefined && reply.target.length !== 0" class="reply-ref">
+                            <a class="ref" v-bind:href="'#' + 'reply' + reply.target.id">@{{ reply.target.user.name }}</a>
+                            <div class="comment" v-html="reply.target.content"></div>
+                            <hr />
+                        </div>
+                        <div v-html="reply.content"></div>
                     </div>
                 </div>
             </div>
@@ -38,18 +43,25 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     export default {
         name: "Replies",
         props: [
-            'topic_id'
+            'topic_id',
+            'can_comment'
         ],
-        data() {
-            return {
-                replies: []
-            }
+        computed: {
+            ...mapGetters({
+                replies: 'getReplies'
+            })
         },
         mounted() {
             this.load();
+            this.$store.dispatch('modifyTarget', {
+                'reply_type': 1,
+                'target_id': this.topic_id
+            });
         },
         methods: {
             load: function () {
@@ -57,7 +69,7 @@
                 let _this = this;
                 axios.get(url, {params: {}}).then(function (response) {
                     console.log(response);
-                    _this.replies = response.data;
+                    _this.$store.dispatch('modifyReplies', response.data);
                 }).catch(function (error) {
                     console.log(error)
                 })
@@ -77,7 +89,7 @@
                         }
                     }).then(function (response) {
                         if (response.data.code === 0) {
-                            _this.$message.success('You\'ve deleted an article.')
+                            _this.$message.success('你删除了一条评论。')
                             _this.load()
                         }
                     }).catch(function (error) {
@@ -96,10 +108,22 @@
                 });
 
             },
+            comment: function (id) {
+                window.location.href = '#reply';
+                $($('#reply').find('textarea')[0]).focus();
+                this.$store.dispatch('modifyTarget', {
+                    'reply_type': 0,
+                    'target_id': id
+                });
+            }
         }
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .reply-ref {
+        .ref {
+            color: #3097D1;
+        }
+    }
 </style>

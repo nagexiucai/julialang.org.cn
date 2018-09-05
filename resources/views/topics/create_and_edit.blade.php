@@ -7,6 +7,7 @@
         <div class="panel panel-default">
 
             <div class="panel-body">
+                @can('create_topics')
                 <h2 class="text-center">
                     <i class="glyphicon glyphicon-edit"></i>
                     @if($topic->id)
@@ -49,7 +50,10 @@
                     <div class="well well-sm">
                         <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 保存</button>
                     </div>
-                </form>
+                    </form>
+                    @else
+                        您暂时不能发帖，请联系管理员。
+                    @endcan
             </div>
         </div>
     </div>

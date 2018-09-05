@@ -22,14 +22,14 @@ class FreshTopicSeeder extends \Illuminate\Database\Seeder
         return [
             [
                 'title' => 'abc',
-                'body' => 'def',
+                'body' => 'abc',
                 'user_id' => 1,
                 'category_id' => 1,
                 'excerpt' => 'abstract',
                 'created_at' => date('Y-m-d H:i:s')
             ],
             [
-                'title' => 'abc',
+                'title' => 'def',
                 'body' => 'def',
                 'user_id' => 1,
                 'category_id' => 1,

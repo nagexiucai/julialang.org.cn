@@ -1,27 +1,13 @@
-@extends('layouts.app')
+@component('mail::message')
+# Your account has been initialized.
 
-@section('title')
-    Your account has been initialized
-@stop
+Hello, your account has been initialized, please **login to reset your password**.
 
-@section('content')
-    <div class="container">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
+@component('mail::button', ['url' => '', 'color' => 'blue'])
+go to reset
+@endcomponent
 
-                <div class="panel-body">
+Thanks,<br>
+{{ config('app.name') }}
 
-                    <h3 class="text-center">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Your account has been initialized
-                    </h3>
-                    <hr>
-
-                    <div class="notification-list">
-                        Your account has been initialized, please login to reset your password.
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-@stop
+@endcomponent
