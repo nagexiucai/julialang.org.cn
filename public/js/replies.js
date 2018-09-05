@@ -20129,7 +20129,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             window.location.href = '#reply';
             $($('#reply').find('textarea')[0]).focus();
             this.$store.dispatch('modifyTarget', {
-                'reply_type': 0,
+                'reply_type': 1,
                 'target_id': id
             });
         }
