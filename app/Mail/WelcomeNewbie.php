@@ -2,23 +2,26 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserInitialized extends Mailable
+class WelcomeNewbie extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $user;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $user
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -28,6 +31,6 @@ class UserInitialized extends Mailable
      */
     public function build()
     {
-        return $this->from('rextsao@qq.com')->view('emails.user.initialized');
+        return $this->markdown('emails.user.welcome', ['name' => $this->user->name]);
     }
 }

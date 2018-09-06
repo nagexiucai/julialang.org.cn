@@ -2,14 +2,6 @@
 
 use App\Models\Topic;
 
-/**
- * Created by PhpStorm.
- * User: rex
- * Email: caoliang@simpleedu.com.cn
- * Date: 2018/8/30
- * Time: 1:26 PM
- */
-
 class FreshTopicSeeder extends \Illuminate\Database\Seeder
 {
 
@@ -21,18 +13,10 @@ class FreshTopicSeeder extends \Illuminate\Database\Seeder
     private static function _data() {
         return [
             [
-                'title' => 'abc',
-                'body' => 'abc',
+                'title' => 'Hi, Julia!',
+                'body' => 'Hi, Julia!',
                 'user_id' => 1,
-                'category_id' => 1,
-                'excerpt' => 'abstract',
-                'created_at' => date('Y-m-d H:i:s')
-            ],
-            [
-                'title' => 'def',
-                'body' => 'def',
-                'user_id' => 1,
-                'category_id' => 1,
+                'category_id' => 4,
                 'excerpt' => 'abstract',
                 'created_at' => date('Y-m-d H:i:s')
             ]

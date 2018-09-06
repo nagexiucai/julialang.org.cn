@@ -7,6 +7,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Class User
+ *
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $avatar
+ * @property string $introduction
+ * @property integer $notification_count
+ * @property string $last_actived_at
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Traits\LastActivedAtHelper;
