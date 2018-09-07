@@ -31,6 +31,6 @@ class WelcomeNewbie extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.user.welcome', ['name' => $this->user->name]);
+        return $this->subject('欢迎，新人！')->markdown('emails.user.welcome', ['name' => $this->user->name]);
     }
 }
