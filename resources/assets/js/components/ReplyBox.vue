@@ -8,6 +8,15 @@
                     <textarea v-else-if="auth_checked === 0" class="form-control" rows="3" placeholder="登录以分享你的想法" name="content" disabled></textarea>
                     <textarea v-else class="form-control" rows="3" placeholder="您暂无评论权限，请联系管理员。" name="content" disabled></textarea>
                 </div>
+                <div class="form-group">
+                    <el-tag
+                            v-show="target.target_id !== 0"
+                            closable
+                            v-bind:disable-transitions="false"
+                            @close="removeTarget()">
+                        {{ target.target_name }}
+                    </el-tag>
+                </div>
                 <button v-if="auth_checked === 1 && can_comment === 1" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-share"></i>回复</button>
                 <button v-else type="submit" class="btn btn-primary btn-sm" disabled><i class="fa fa-share"></i>回复</button>
                 <input type="hidden" name="reply_type" v-bind:value="target.reply_type" />
@@ -59,6 +68,11 @@
                         $(elObj.find('textarea')).val('');
                         _this.$message.success('你发送了一条评论。');
                         _this.load();
+                        _this.$store.dispatch('modifyTarget', {
+                            'reply_type': 0,
+                            'target_id': 0,
+                            'target_name': ''
+                        });
                     }
                 }).catch(function (error) {
                     _this.$notify({
@@ -68,7 +82,18 @@
                         duration: 0
                     });
                 })
+            },
+            removeTarget() {
+                console.log('[ReplyBox] target: ', this.target);
+                this.$store.dispatch('modifyTarget', {
+                    'reply_type': 0,
+                    'target_id': 0,
+                    'target_name': ''
+                });
             }
+        },
+        created() {
+            console.log('[created]', this.target);
         }
     }
 </script>

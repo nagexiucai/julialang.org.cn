@@ -3,7 +3,8 @@ import * as types from '../mutation-types'
 const state = {
     target : {
         reply_type: 0,
-        target_id: 0
+        target_id: 0,
+        target_name: '0'
     },
     replies: []
 }

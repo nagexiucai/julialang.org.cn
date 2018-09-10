@@ -22,7 +22,7 @@
                             </button>
                         </span>
                         <span v-if="can_comment === 1" class="meta pull-right">
-                            <button class="btn btn-default btn-xs pull-right reply" v-on:click="comment(reply.id)">
+                            <button class="btn btn-default btn-xs pull-right reply" v-on:click="comment(reply.id, reply.user.name)">
                                 <i class="glyphicon glyphicon-comment"></i>
                             </button>
                         </span>
@@ -58,10 +58,11 @@
         },
         mounted() {
             this.load();
-            this.$store.dispatch('modifyTarget', {
-                'reply_type': 1,
-                'target_id': this.topic_id
-            });
+            // this.$store.dispatch('modifyTarget', {
+            //     'reply_type': 0,
+            //     'target_id': this.topic_id,
+            //     'target_name': ''
+            // });
         },
         methods: {
             load: function () {
@@ -108,12 +109,13 @@
                 });
 
             },
-            comment: function (id) {
+            comment: function (id, uname) {
                 window.location.href = '#reply';
                 $($('#reply').find('textarea')[0]).focus();
                 this.$store.dispatch('modifyTarget', {
                     'reply_type': 1,
-                    'target_id': id
+                    'target_id': id,
+                    'target_name': uname
                 });
             }
         }

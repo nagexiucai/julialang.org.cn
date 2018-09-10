@@ -7,7 +7,7 @@
 window.Vue = require('vue');
 
 import store from './store'
-import {Message, MessageBox, Notification} from 'element-ui'
+import {Message, MessageBox, Notification, Tag} from 'element-ui'
 import Replies from './components/Replies'
 import ReplyBox from './components/ReplyBox'
 
@@ -18,11 +18,14 @@ import ReplyBox from './components/ReplyBox'
  */
 
 Vue.component('replies', require('./components/Replies.vue'));
+Vue.component(Tag.name, Tag);
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$notify = Notification;
+
+// Vue.use(Tag);
 
 const app = new Vue({
     el: '#replies',
