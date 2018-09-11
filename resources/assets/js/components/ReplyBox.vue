@@ -14,7 +14,7 @@
                             closable
                             v-bind:disable-transitions="false"
                             @close="removeTarget()">
-                        {{ target.target_name }}
+                        @{{ target.target_name }}
                     </el-tag>
                 </div>
                 <button v-if="auth_checked === 1 && can_comment === 1" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-share"></i>回复</button>
