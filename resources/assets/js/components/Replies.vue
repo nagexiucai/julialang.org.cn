@@ -2,30 +2,33 @@
     <div class="reply-list">
         <div v-for="(reply, key) in replies">
             <div class="media row" v-bind:name="'reply' + reply.id" v-bind:id="'reply' + reply.id">
-                <div class="avatar col-md-1">
+                <div class="avatar col-md-1 col-xs-3 col-sm-3">
                     <a v-bind:href="'/users/show/' + reply.id">
                         <img class="media-object img-thumbnail" v-bind:alt="reply.user.name" v-bind:src="reply.user.avatar"  style="width:48px;height:48px;"/>
                     </a>
                 </div>
 
-                <div class="infos col-md-11">
-                    <div class="media-heading">
-                        <a v-bind:href="'/users/show/' + reply.id" v-bind:title="reply.user.name">
-                            {{ reply.user.name }}
-                        </a>
-                        <span> •  </span>
-                        <span class="meta" v-bind:title="reply.created_at">{{ reply.created_at }}</span>
-
-                        <span v-if="reply.can_destroy === true" class="meta pull-right">
-                            <button type="submit" class="btn btn-default btn-xs pull-right" v-on:click="remove(reply.id)">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </button>
-                        </span>
-                        <span v-if="can_comment === 1" class="meta pull-right">
-                            <button class="btn btn-default btn-xs pull-right reply" v-on:click="comment(reply.id, reply.user.name)">
-                                <i class="glyphicon glyphicon-comment"></i>
-                            </button>
-                        </span>
+                <div class="infos col-md-11 col-xs-9 col-sm-9 col-sm-offset-0 col-xs-offset-0">
+                    <div class="media-heading row">
+                        <div class="col-md-10 col-sm-12 col-xs-12">
+                            <a v-bind:href="'/users/show/' + reply.id" v-bind:title="reply.user.name">
+                                {{ reply.user.name }}
+                            </a>
+                            <span> •  </span>
+                            <span class="meta" v-bind:title="reply.created_at">{{ reply.created_at }}</span>
+                        </div>
+                        <div class="col-md-2 col-sm-12 col-xs-12 text-md-right text-lg-right">
+                            <span v-if="reply.can_destroy === true" class="meta">
+                                <button type="submit" class="btn btn-default btn-xs" v-on:click="remove(reply.id)">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </button>
+                            </span>
+                                <span v-if="can_comment === 1" class="meta">
+                                <button type="button" class="btn btn-default btn-xs" v-on:click="comment(reply.id, reply.user.name)">
+                                    <i class="glyphicon glyphicon-comment"></i>
+                                </button>
+                            </span>
+                        </div>
                     </div>
                     <div class="reply-content">
                         <div v-if="reply.target !== undefined && reply.target.length !== 0" class="reply-ref">
@@ -58,25 +61,23 @@
         },
         mounted() {
             this.load();
-            // this.$store.dispatch('modifyTarget', {
-            //     'reply_type': 0,
-            //     'target_id': this.topic_id,
-            //     'target_name': ''
-            // });
         },
         methods: {
             load: function () {
                 let url = '/replies/' + this.topic_id;
                 let _this = this;
                 axios.get(url, {params: {}}).then(function (response) {
-                    console.log(response);
                     _this.$store.dispatch('modifyReplies', response.data);
                 }).catch(function (error) {
-                    console.log(error)
+                    _this.$notify({
+                        type: 'error',
+                        title: error.response.statusText,
+                        message: '不妙，操作失败了，请等下再试哦~',
+                        duration: 0
+                    })
                 })
             },
             remove: function (id) {
-                console.log(id);
                 this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -97,7 +98,7 @@
                         _this.$notify({
                             type: 'error',
                             title: error.response.statusText,
-                            message: error.response.data,
+                            message: '不妙，操作失败了，请等下再试哦~',
                             duration: 0
                         })
                     })

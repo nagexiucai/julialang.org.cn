@@ -43,19 +43,19 @@
                 target: 'getTarget'
             })
         },
-        mounted() {
-            console.log('[ReplyBox] mounted');
-            console.log('[ReplyBox] auth_checked', this.auth_checked);
-        },
         methods: {
             load: function () {
                 let url = '/replies/' + this.topic_id;
                 let _this = this;
                 axios.get(url, {params: {}}).then(function (response) {
-                    console.log(response);
                     _this.$store.dispatch('modifyReplies', response.data);
                 }).catch(function (error) {
-                    console.log(error)
+                    _this.$notify({
+                        type: 'error',
+                        title: error.response.statusText,
+                        message: '不妙，操作失败了，请等下再试哦~',
+                        duration: 0
+                    })
                 })
             },
             submit: function (event) {
@@ -84,16 +84,12 @@
                 })
             },
             removeTarget() {
-                console.log('[ReplyBox] target: ', this.target);
                 this.$store.dispatch('modifyTarget', {
                     'reply_type': 0,
                     'target_id': 0,
                     'target_name': ''
                 });
             }
-        },
-        created() {
-            console.log('[created]', this.target);
         }
     }
 </script>

@@ -31,8 +31,6 @@ class RepliesController extends Controller
 
         $reply->save();
         return response()->json(['code' => 0]);
-
-//        return redirect()->to($reply->topic->link())->with('success', '回复创建成功！');
     }
 
     public function destroy(Reply $reply)
@@ -40,7 +38,6 @@ class RepliesController extends Controller
         $this->authorize('destroy', $reply);
         $reply->delete();
 
-//        return redirect()->to($reply->topic->link())->with('success', '成功删除回复！');
         return response()->json(['code' => 0]);
     }
 
