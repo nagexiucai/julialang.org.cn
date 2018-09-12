@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-                <p class="text-md-left text-sm-left text-xs-left">Designed by <a href="http://www.dodcode.com/" target="_blank">dodcode</a></p>
+                <p class="text-md-left text-sm-left text-xs-left"><a href="https://julialang.org/" target="_blank">julia</a></p>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <?php
