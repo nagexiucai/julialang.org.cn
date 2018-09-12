@@ -52,6 +52,7 @@ class RepliesController extends Controller
         $user = Auth::user();
 
         foreach ($replies as $key => $reply) {
+            $arr_replies[$key]['created_at'] = $reply->created_at->diffForHumans();
             $arr_replies[$key]['can_destroy'] = $user->can('destroy', $reply);
             if ($reply->reply_type === Reply::TYPE_REPLY) {
                 $arr_replies[$key]['target'] = $replies_index[$reply->target_id] ?? [];
